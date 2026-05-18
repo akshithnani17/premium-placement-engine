@@ -131,7 +131,8 @@ def register_user(username, password):
 def authenticate_user(username, password):
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
-    c.execute("SELECT * VALUES FROM users WHERE username = ? AND password = ?", (username, password))
+    # FIXED: Removed the invalid 'VALUES' keyword from the SQL selection query string
+    c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
     user = c.fetchone()
     conn.close()
     return user is not None
@@ -155,7 +156,6 @@ if not st.session_state.logged_in:
     with col_c:
         auth_mode = st.radio("System Gateway Access", ["Sign In", "Sign Up"], horizontal=True)
         with st.form("system_auth_gate"):
-            # UPDATED: Simplified text fields and buttons according to your specifications
             username = st.text_input("user name/email").strip()
             password = st.text_input("password", type="password")
             submit_btn = st.form_submit_button("submit")
@@ -205,7 +205,7 @@ navigation_dest = st.sidebar.selectbox(
 )
 
 # ---------------------------------------------------------
-# TRACK 1: EXTENDED SUBJECT-WISE TECHNICAL INTERVIEW BANK
+# TRACK 1: SUBJECT-WISE TECHNICAL INTERVIEW BANK
 # ---------------------------------------------------------
 if navigation_dest == "Subject-Wise Technical Interview Bank":
     st.header("Multi-Disciplinary Technical Subject Deep-Dive")
@@ -370,7 +370,7 @@ elif navigation_dest == "Infinite Aptitude Sandbox":
                 st.error(f"Error handling automated aptitude generation: {str(e)}")
 
 # ---------------------------------------------------------
-# TRACK 4: HIGH-FIDELITY ADVANCED COMMUNICATION SKILLS
+# TRACK 4: ADVANCED COMMUNICATION SKILLS
 # ---------------------------------------------------------
 elif navigation_dest == "Advanced Communication Skills":
     st.header("Executive Linguistic Agility & Behavioral Delivery Engine")
@@ -452,7 +452,7 @@ elif navigation_dest == "Interview Tips & Etiquette":
                     st.error(f"Error loading playbook databases: {str(e)}")
 
 # ---------------------------------------------------------
-# TRACK 6: ENHANCED GITHUB PROJECT PRESENTATION ANALYZER
+# TRACK 6: GITHUB PROJECT PRESENTATION ANALYZER
 # ---------------------------------------------------------
 elif navigation_dest == "GitHub Project Presentation Analyzer":
     st.header("GitHub Repository & Technical Architectural Presentation Analyzer")
